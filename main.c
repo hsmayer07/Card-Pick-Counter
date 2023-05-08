@@ -18,4 +18,11 @@ int main(int argc, char* argv[]) {
 	}
 
 	dataSet_t* inputData = inputreader(input);
+	if(inputData == NULL) {
+		fprintf(stderr, "Error: The input file, %s, contained a fatal formatting error. Please try again!\n", argv[1]);
+	}
+	printf("The total size is: %d \n", inputData -> size);
+	for(int i = 0; i < inputData -> size; i++) {
+		printf("Index %d is: %d and has the name %s \n", i, inputData -> counts[i], inputData -> names[i]);
+	}
 }

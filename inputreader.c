@@ -8,16 +8,45 @@ dataSet_t* inputreader(FILE* dataSource) {
 		return NULL;
 	}
 
-	dataSet_t* inputData = malloc(sizeof(dataSet_t))m;
+	dataSet_t* inputData = malloc(sizeof(dataSet_t));
 	if(inputData == NULL) {
 		fprintf(stderr, "Fatal Malloc Error! Terminating");
 		exit(1);
 	}
 
 	inputData -> counts = malloc(count * sizeof(int));
+	inputData -> size = count;
 	if(inputData -> counts == NULL) {
 		fprintf(stderr, "Fatal Malloc Error! Terminating");
 		exit(1);
 	}
+
+	inputData -> names = malloc(count *sizeof(char *));
+	if(inputData -> names == NULL) {
+		fprintf(stderr, "Fatal Malloc Error! Terminating");
+		exit(1);
+	}
+
+	int currentLength; 
+	for(int i = 0; i < count; i++) {
+		if(fscanf(dataSource, "%d ", &currentLength) != 1) {
+			return NULL;
+		}
+
+		if(currentLength < 0 || currentLength > 20) {
+			return NULL;
+		}
+
+		inputData -> names[i] = malloc(currentLength * sizeof(char) + 1);
+		
+		if(fscanf(dataSource, "%s ", inputData -> names[i]) != 1) {
+			return NULL;
+		}
+
+		if(fscanf(dataSource, "%d\n", &(inputData -> counts[i])) != 1) {
+			return NULL;
+		}
+	}
+
 	return inputData;
 }
