@@ -21,8 +21,17 @@ int main(int argc, char* argv[]) {
 	if(inputData == NULL) {
 		fprintf(stderr, "Error: The input file, %s, contained a fatal formatting error. Please try again!\n", argv[1]);
 	}
-	printf("The total size is: %d \n", inputData -> size);
-	for(int i = 0; i < inputData -> size; i++) {
-		printf("Index %d is: %d and has the name %s \n", i, inputData -> counts[i], inputData -> names[i]);
+	fclose(input);
+	//printf("The total size is: %d \n", inputData -> size);
+	int ***randCards = cardpicker(inputData, 3, 3, 9);
+	for(int i = 0; i < 3; i++) {
+		printf("\n Currently on round %d \n", i);
+		for(int j = 0; j < 3; j ++) {
+			printf("Player %d: ", j);
+			for(int k = 0; k < 12; k++) {
+				printf(" %d ", randCards[i][j][k]);
+			}
+		}
 	}
+	printf("\n");
 }

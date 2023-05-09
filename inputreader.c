@@ -10,20 +10,20 @@ dataSet_t* inputreader(FILE* dataSource) {
 
 	dataSet_t* inputData = malloc(sizeof(dataSet_t));
 	if(inputData == NULL) {
-		fprintf(stderr, "Fatal Malloc Error! Terminating");
+		fprintf(stderr, "Fatal Memory Error! Terminating");
 		exit(1);
 	}
 
 	inputData -> counts = malloc(count * sizeof(int));
 	inputData -> size = count;
 	if(inputData -> counts == NULL) {
-		fprintf(stderr, "Fatal Malloc Error! Terminating");
+		fprintf(stderr, "Fatal Memory Error! Terminating");
 		exit(1);
 	}
 
 	inputData -> names = malloc(count *sizeof(char *));
 	if(inputData -> names == NULL) {
-		fprintf(stderr, "Fatal Malloc Error! Terminating");
+		fprintf(stderr, "Fatal Memory Error! Terminating");
 		exit(1);
 	}
 
@@ -37,9 +37,23 @@ dataSet_t* inputreader(FILE* dataSource) {
 			return NULL;
 		}
 
-		inputData -> names[i] = malloc(currentLength * sizeof(char) + 1);
+		inputData -> names[i] = malloc(sizeof(String_t));
+
+		if(inputData -> names[i] == NULL) {
+			fprintf(stderr, "Fatal Memory Error! Terminating");
+			exit(1);
+		}
+
+		inputData -> names[i] -> data = malloc(sizeof(char)*currentLength + 1);
+
+		if(inputData -> names[i] == NULL) {
+			fprintf(stderr, "Fatal Memory Error! Terminating");
+			exit(1);
+		}
+
+		inputData -> names[i] -> size = currentLength+1;
 		
-		if(fscanf(dataSource, "%s ", inputData -> names[i]) != 1) {
+		if(fscanf(dataSource, "%s ", inputData -> names[i] -> data ) != 1) {
 			return NULL;
 		}
 
