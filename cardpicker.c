@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include "counter.h"
 
 
@@ -18,9 +17,7 @@ int ***cardpicker(dataSet_t* input, int numRounds, int numPlayers, int numCards)
         *(roundCards + i) = input -> counts[i];
     }
 
-    time_t t;
 
-    srand((unsigned) time(&t));
 
     for(int i = 0; i < numRounds; i++) {
         output[i] = malloc(numPlayers * sizeof(int * ));
@@ -46,12 +43,23 @@ int ***cardpicker(dataSet_t* input, int numRounds, int numPlayers, int numCards)
             for(int k = 0; k < numCards; k++) {
                  while(roundCards[index = rand() % targetSize] <= 0) {
                     //Do something until we get a valid number
+                    //printf("Skill issue! %d \n", index);
                  }
-                printf("%d, %d, %d, Index = %d \n", i, j, k, index);
+                //printf("%d, %d, %d, Index = %d \n", i, j, k, index);
                 roundCards[index]--;
                 output[i][j][index]++; 
             }
         }
     }
+
+    printf("\n");
+    for(int i = 0; i < numRounds; i++) {
+        for(int j = 0; j < numPlayers; j++) {
+            for(int k = 0; k < numCards; k++) {
+                printf("%d, ", output[i][j][k]);
+            }
+        }
+    }
+    printf("\n");
     return output;
 }

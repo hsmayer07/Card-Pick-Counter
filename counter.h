@@ -11,3 +11,4 @@ typedef struct dataSet {
 
 dataSet_t* inputreader(FILE*);
 int ***cardpicker(dataSet_t*, int, int, int);
+void writeoutput(int***, FILE*);
